@@ -1,0 +1,23 @@
+{
+    "name": "gouh/psr-health",
+    "description": "It is a handler to be able to know if there are certain connections such as cache, database and some external endpoints",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hugo Hernández Valdez",
+            "email": "hugohv10@gmail.com"
+        }
+    ],
+    "require": {
+        "psr/container": "^2.0",
+        "ext-redis": "*",
+        "ext-pdo": "*",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "PsrHealth\\": "src/"
+        }
+    }
+}
