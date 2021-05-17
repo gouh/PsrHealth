@@ -28,7 +28,7 @@ class Configuration
 
     public function getMongoConfig()
     {
-        return isset($this->config['redis']) ? $this->config['redis'] : null;
+        return isset($this->config['mongo']) ? $this->config['mongo'] : null;
     }
 
     public function getEndpointConfig()
