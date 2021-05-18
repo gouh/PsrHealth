@@ -24,7 +24,9 @@ class ConfigProvider
     private function getDependencies(): array
     {
         return [
-            Health::class => HealthFactory::class
+            'factories' => [
+                Health::class => HealthFactory::class
+            ]
         ];
     }
 }
