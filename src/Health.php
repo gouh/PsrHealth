@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PsrHealth;
 
+use MongoDB\Driver\Manager;
+use MongoDB\Driver\Query;
 use PDO;
 use PDOException;
 use Redis;
@@ -12,10 +14,13 @@ use MongoDB\Driver\Exception\ConnectionTimeoutException;
 use MongoDB\Driver\Exception\RuntimeException;
 use MongoDB\Driver\Exception\InvalidArgumentException;
 use MongoDB\Driver\Exception\AuthenticationException;
-use \MongoDB\Driver\Exception\Exception;
+use MongoDB\Driver\Exception\Exception;
 
 class Health
 {
+    /**
+     * @var Configuration
+     */
     private $config;
 
     public function __construct(Configuration $config)
@@ -62,14 +67,13 @@ class Health
             $mysqlConfig['port']
         );
 
-        $conn = new PDO(
+        new PDO(
             $dsn,
             $mysqlConfig['user'],
             $mysqlConfig['password'],
             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
         );
 
-        $conn = null;
         return true;
     }
 
@@ -85,17 +89,15 @@ class Health
         }
 
         $url = "mongodb://%s:%s@%s:%s";
-        $url = sprintf(
+        $manager = new Manager(sprintf(
             $url,
             $mongoConfig['user'],
             $mongoConfig['password'],
             $mongoConfig['host'],
             $mongoConfig['port']
-        );
+        ));
 
-        $manager = new \MongoDB\Driver\Manager($url);
-
-        $query = new \MongoDB\Driver\Query([]);
+        $query = new Query([]);
         $rows = $manager->executeQuery($mongoConfig['database'] . '.' . $mongoConfig['collection'], $query);
         if (is_array($rows->toArray())) {
             return true;
@@ -149,13 +151,15 @@ class Health
     }
 
     /**
+     * Get the status of the redis, mysql, mongo databases and send a GET request to the configured endpoints.
+     *
      * @return array
      */
     public function getHealthStatus(): array
     {
-        $redis = false;
-        $mysql = false;
-        $mongo = false;
+        $redis = null;
+        $mysql = null;
+        $mongo = null;
 
         try {
             $redis = $this->redisConnection();
