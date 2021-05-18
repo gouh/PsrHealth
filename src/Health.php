@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace PsrHealth;
 
-use MongoDB\Driver\Manager;
-use MongoDB\Driver\Query;
 use PDO;
 use PDOException;
 use Redis;
 use RedisException;
+use MongoDB\Driver\Manager;
+use MongoDB\Driver\Query;
 use MongoDB\Driver\Exception\ConnectionTimeoutException;
 use MongoDB\Driver\Exception\RuntimeException;
 use MongoDB\Driver\Exception\InvalidArgumentException;
