@@ -37,7 +37,7 @@ Config for psr-health, add an array like this in the project config
         'mysql' => [
             'host' => 'local-mysql-57',
             'port' => 3306,
-            'database' => 'credit_sears',
+            'database' => 'credit',
             'user' => 'hangouh',
             'password' => 'secret2'
         ],
@@ -65,7 +65,7 @@ You can confgure only what you require
         'mysql' => [
             'host' => 'local-mysql-57',
             'port' => 3306,
-            'database' => 'credit_sears',
+            'database' => 'credit',
             'user' => 'hangouh',
             'password' => 'secret2'
         ],
